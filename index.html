@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid Generator</title>
+    <style>
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            background-color: rgba(255, 255, 255, 0);
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-corner {
+            background: rgba(255, 255, 255, 0);
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: gray;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgb(54, 54, 54);
+        }
+        /* Main */
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            
+        }
+        #input, #error, #pyramid, #info {
+            margin: 20px 10px;
+            white-space: pre;
+        }
+        #error {color: #FF5555;}
+        #pyramid {
+            max-height: calc(100vh - 156px);
+            overflow: auto;
+        }
+        /* Input */
+        input, button {
+            background-color: rgba(0, 0, 0, 0);
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid white;
+        }
+        button {
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: white;
+            color: black;
+        }
+        button:active {
+            background-color: gray;
+            border: 1px solid gray;
+            transform: translateY(1px);
+        }
+        @media only screen and (max-width: 500px) {
+            #pyramid {
+                max-height: calc(80vh - 156px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="input">Enter a number: <input type="number" value="5" id="input_number"><button onclick="pyramidGen()">></button>
+    </div>
+    <div id="error"></div>
+    <div id="pyramid"></div>
+    <div id="info"></div>
+    
+    <!-- JAVASCRIPT -->
+    <script>
+        elInput = document.getElementById("input_number");
+        elPyramid = document.getElementById("pyramid");
+        elError = document.getElementById("error");
+        elInfo = document.getElementById("info");
+
+
+        function pyramidGen(h) {
+            if(!h) {h = elInput.value;}
+
+            // Minimum/maximum error
+            if(h > 500 || h < 1) {
+                elPyramid.innerText = "";
+                elError.innerText = "Must be a number between 1 and 500";
+                elInfo.innerText = `height: 0\nwidth: 0`;
+                return;
+            } else {
+                elError.innerText = "";
+            }
+
+            var w = 1 + ((h - 1) * 2);
+            var pyramid = "";
+
+            function spaces(c) {
+                for(ci = 1; ci <= c; ci++) {pyramid += " ";}
+            }
+
+            // Iterate across height
+            for(var hi = 1; hi <= h; hi++) {
+                var currentWidth = 1 + ((hi - 1) * 2);
+                var emptySpace = (w - currentWidth) / 2;
+
+                spaces(emptySpace);
+                for(wi = 1; wi <= currentWidth; wi++) {pyramid += "*";}
+                spaces(emptySpace);
+
+                pyramid += "\n";
+            }
+
+            // Output
+            elPyramid.innerText = pyramid;
+            elInfo.innerText = `height: ${h}\nwidth:  ${w}`;
+            console.log(pyramid);
+            console.log(`Pyramid height: ${h}\nPyramid width:  ${w}`);
+
+            return pyramid;
+        }
+
+        pyramidGen();
+
+    </script>
+</body>
+</html>
