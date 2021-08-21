@@ -94,19 +94,17 @@
             var w = 1 + ((h - 1) * 2);
             var pyramid = "";
 
-            function spaces(c) {
-                for(ci = 1; ci <= c; ci++) {pyramid += " ";}
-            }
-
             // Iterate across height
             for(var hi = 1; hi <= h; hi++) {
                 var currentWidth = 1 + ((hi - 1) * 2);
                 var emptySpace = (w - currentWidth) / 2;
 
-                spaces(emptySpace);
-                for(wi = 1; wi <= currentWidth; wi++) {pyramid += "*";}
-                spaces(emptySpace);
+                // Iterate across width
+                for(wi = 1; wi <= w; wi++) {
+                    pyramid += wi <= emptySpace || wi >= emptySpace + currentWidth + 1 ? " " : "*";
+                }
 
+                // New line at the end of layer
                 pyramid += "\n";
             }
 
