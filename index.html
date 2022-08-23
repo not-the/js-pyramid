@@ -118,6 +118,9 @@
         }
 
         pyramidGen();
+        elInput.addEventListener('keydown', event => {
+            if(event.key == 'Enter') pyramidGen();
+        });
 
     </script>
 </body>
